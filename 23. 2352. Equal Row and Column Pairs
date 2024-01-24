@@ -1,0 +1,33 @@
+import java.util.HashMap;
+
+class Solution {
+    public int equalPairs(int[][] grid) {
+        int count = 0;
+        int n = grid.length;
+
+        HashMap<String, Integer> rowHash = new HashMap<>();
+        HashMap<String, Integer> colHash = new HashMap<>();
+
+        // Count rows and columns in a single loop
+        for (int i = 0; i < n; i++) {
+            StringBuilder rowKey = new StringBuilder();
+            StringBuilder colKey = new StringBuilder();
+
+            for (int j = 0; j < n; j++) {
+                rowKey.append(grid[i][j]).append("#");
+                colKey.append(grid[j][i]).append("#");
+            }
+
+            // Update counts for rows and columns
+            rowHash.put(rowKey.toString(), rowHash.getOrDefault(rowKey.toString(), 0) + 1);
+            colHash.put(colKey.toString(), colHash.getOrDefault(colKey.toString(), 0) + 1);
+        }
+
+        // Count equal pairs in a single loop
+        for (String key : rowHash.keySet()) {
+            count += rowHash.get(key) * colHash.getOrDefault(key, 0);
+        }
+
+        return count;
+    }
+}
