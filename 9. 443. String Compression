@@ -1,0 +1,23 @@
+class Solution {
+    public int compress(char[] chars) {
+        int i = 0;
+        int j = 1;
+        int count = 1;
+        while (j <= chars.length) {
+            if (j == chars.length || chars[j] != chars[j - 1]) {
+                chars[i++] = chars[j - 1];
+                if (count > 1) {
+                    char[] countChars = Integer.toString(count).toCharArray();
+                    for (char c : countChars) {
+                        chars[i++] = c;
+                    }
+                }
+                count = 1;  // Reset count for the new character
+            } else {
+                count++;
+            }
+            j++;
+        }
+        return i;
+    }
+}
