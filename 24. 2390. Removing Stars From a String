@@ -1,0 +1,35 @@
+import java.util.Stack;
+
+class Solution {
+    public String removeStars(String s) {
+        Stack<Character> charStack = new Stack<>();
+        Stack<Character> charStack1 = new Stack<>();
+        StringBuilder reversedString = new StringBuilder();
+
+        for (char c : s.toCharArray()) {
+            // Push the character onto the stack
+            charStack.push(c);
+
+            // Check if the top of the stack is '*' and remove the last two characters
+            if (!charStack.isEmpty() && charStack.peek() == '*') {
+                charStack.pop(); // Pop the '*'
+                
+                if (!charStack.isEmpty()) {
+                    charStack.pop(); // Pop the character before '*'
+                }
+            }
+        }
+
+        // Reverse the remaining characters in the stack
+        while (!charStack.isEmpty()) {
+            charStack1.push(charStack.pop());
+        }
+
+        // Build the reversed string
+        while (!charStack1.isEmpty()) {
+            reversedString.append(charStack1.pop());
+        }
+
+        return reversedString.toString();
+    }
+}
