@@ -1,0 +1,27 @@
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+
+        StringBuilder s1 = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+
+        inorderTraversal(root1, s1);
+        inorderTraversal(root2, s2);
+
+        return s1.toString().equals(s2.toString());
+    }
+
+    public void inorderTraversal(TreeNode root, StringBuilder leaf) {
+        if (root == null) return;
+
+        inorderTraversal(root.left, leaf);
+
+        if (root.left == null && root.right == null) {
+            leaf.append(root.val).append("_");
+        }
+
+        inorderTraversal(root.right, leaf);
+    }
+}
