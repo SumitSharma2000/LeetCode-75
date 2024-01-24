@@ -1,0 +1,33 @@
+
+class Solution {
+    
+    Map<Long,Integer> visited=new HashMap<>();
+    int count=0;
+   
+    public int pathSum(TreeNode root, int targetSum) {
+        
+        visited.put(0L,1);
+        helper(root,targetSum,0);
+        return count;
+    }
+
+    public void helper(TreeNode root,long targetSum,long currentSum){
+       
+        if(root==null)
+          return;
+
+        currentSum+=root.val;
+
+        if(visited.containsKey(currentSum-targetSum)){
+            count=count+(int)visited.get(currentSum-targetSum);
+        }
+
+        visited.put(currentSum,visited.getOrDefault(currentSum,0)+1);
+        
+        helper(root.left,targetSum,currentSum);
+        helper(root.right,targetSum,currentSum);
+
+        visited.put(currentSum,visited.get(currentSum)-1);
+
+    }
+}
