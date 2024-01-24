@@ -1,0 +1,29 @@
+class Solution {
+    public int pairSum(ListNode head) {
+        ListNode temp = head;
+        int count = 0;
+        
+        // Count the number of nodes
+        while (temp != null) {
+            count++;
+            temp = temp.next;
+        }
+
+        // Populate the array
+        temp = head;
+        int[] data = new int[count];
+        for (int i = 0; i < count; i++) {
+            data[i] = temp.val;
+            temp = temp.next; // Move to the next node
+        }
+
+        int max = Integer.MIN_VALUE;
+
+        // Update loop condition and iterate over the array
+        for (int j = 0, k = count - 1; j < count && k >= 0; j++, k--) {
+            max = Math.max(max, data[j] + data[k]);
+        }
+
+        return max;
+    }
+}
