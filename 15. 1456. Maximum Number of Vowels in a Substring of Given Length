@@ -1,0 +1,35 @@
+class Solution {
+    public int maxVowels(String s, int k) {
+        char[] charArray = s.toCharArray();
+        int max = 0;
+        int count_window = 0;
+        int vowel_count = 0;
+        int i = 0, j = 0;
+
+        while (j < charArray.length) {
+            char ch = charArray[j];
+
+            if (count_window < k) {
+                if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                    vowel_count++;
+                }
+                count_window++;
+                j++;
+            } else {
+                max = Math.max(max, vowel_count);
+
+                char firstChar = charArray[i];
+                if (firstChar == 'a' || firstChar == 'e' || firstChar == 'i' || firstChar == 'o' || firstChar == 'u') {
+                    vowel_count--;
+                }
+
+                count_window--;
+                i++;
+            }
+        }
+
+        max = Math.max(max, vowel_count); // Handle the last substring
+
+        return max;
+    }
+}
