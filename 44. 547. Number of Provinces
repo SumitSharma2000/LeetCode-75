@@ -1,0 +1,25 @@
+class Solution {
+
+    public void dfs(int s, int n, int[][] isConnected, boolean[] visited) {
+        visited[s] = true;
+        // find adjacent nodes which are connected 
+        for (int i = 0; i < n; i++) {
+            if (isConnected[s][i] == 1 && !visited[i]) {
+                dfs(i, n, isConnected, visited);
+            }
+        }
+    }
+
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        boolean[] visited = new boolean[n];
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                count++;
+                dfs(i, n, isConnected, visited);
+            }
+        }   
+        return count;
+    }
+}
