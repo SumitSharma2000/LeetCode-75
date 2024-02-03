@@ -1,0 +1,23 @@
+class Solution {
+    public int money(int[] nums){
+        if(nums.length == 1) return nums[0];
+
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+
+        // Loop through the remaining houses and calculate the maximum amount of money robbed
+        for (int i = 2; i < nums.length; i++) {
+            // At each house, we have two options:
+            // 1. Rob the current house and add its value to the maximum amount robbed until two houses ago
+            // 2. Skip the current house and consider the maximum amount robbed until the previous house
+            dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);
+        }
+        
+        // The final element of the dp array contains the maximum amount of money robbed
+        return dp[nums.length - 1];
+    }
+    public int rob(int[] nums) {
+        return money(nums);
+    }
+}
