@@ -1,0 +1,23 @@
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        if (points == null || points.length == 0) {
+            return 0;
+        }
+        
+        // Sort the balloons based on their end points
+        Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));
+        
+        int arrows = 1;
+        int currentEnd = points[0][1];
+        
+        // Iterate through the balloons and check if the current balloon intersects with the previous one
+        for (int[] balloon : points) {
+            if (balloon[0] > currentEnd) {
+                arrows++;
+                currentEnd = balloon[1];  // Update the end point of the current arrow shot
+            }
+        }
+        
+        return arrows;
+    }
+}
