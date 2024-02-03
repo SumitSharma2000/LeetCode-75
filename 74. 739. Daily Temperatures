@@ -1,0 +1,22 @@
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        int n = temperatures.length;
+        int[] result = new int[n];
+
+        for (int i = n - 2; i >= 0; i--) {
+            int j = i + 1;
+            while (j < n && temperatures[j] <= temperatures[i]) {
+                if (result[j] == 0) { // If no warmer day found yet for temperatures[j]
+                    j = n; // Move to the end of the array
+                } else {
+                    j += result[j]; // Move to the next warmer day found for temperatures[j]
+                }
+            }
+            if (j < n) {
+                result[i] = j - i;
+            }
+        }
+
+        return result;
+    }
+}
