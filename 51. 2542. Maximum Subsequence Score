@@ -1,0 +1,52 @@
+import java.util.*;
+
+class Solution {
+    class Pair {
+        int num1;
+        int num2;
+
+        Pair(int num1, int num2) {
+            this.num1 = num1;
+            this.num2 = num2;
+        }
+    }
+
+    public long maxScore(int[] nums1, int[] nums2, int k) {
+        int n = nums1.length;
+        
+        // Handle case where array lengths are less than k
+        k = Math.min(k, n);
+
+        List<Pair> pairs = new ArrayList<>();
+
+        // Create pairs and add them to the list
+        for (int i = 0; i < n; i++) {
+            pairs.add(new Pair(i, i)); // Pairing each element with itself
+        }
+
+        // Sort the pairs based on the values of nums2 in descending order
+        Collections.sort(pairs, new Comparator<Pair>() {
+            @Override
+            public int compare(Pair p1, Pair p2) {
+                return Integer.compare(nums2[p2.num1], nums2[p1.num1]);
+            }
+        });
+
+        // Select maximum k elements and calculate score
+        long maxScore = 0;
+        Set<Integer> selectedIndices = new HashSet<>();
+        for (Pair pair : pairs) {
+            if (selectedIndices.size() == k) break;
+            if (!selectedIndices.contains(pair.num1)) {
+                maxScore += (long) nums1[pair.num1] * nums2[pair.num1];
+                selectedIndices.add(pair.num1);
+            }
+            if (!selectedIndices.contains(pair.num2) && pair.num1 != pair.num2) {
+                maxScore += (long) nums1[pair.num2] * nums2[pair.num2];
+                selectedIndices.add(pair.num2);
+            }
+        }
+
+        return maxScore;
+    }
+}
