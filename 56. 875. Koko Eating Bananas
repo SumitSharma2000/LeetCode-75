@@ -1,0 +1,35 @@
+class Solution {
+    public boolean canEat(int[] piles, int mid, int h) {
+        int actualHr = 0;
+        for (int x : piles) {
+            actualHr += x / mid;
+            if (x % mid != 0) {  // agar kuch banana bach jae to 
+                actualHr++;
+            }
+        }
+        return actualHr <= h;
+    }
+
+    public int minEatingSpeed(int[] piles, int h) {
+        int n = piles.length;
+        int max = piles[0];
+        for (int i = 1; i < n; i++) {
+            if (piles[i] > max) {
+                max = piles[i];
+            }
+        }
+
+        int low = 1; 
+        int high = max;
+        while (low < high) {
+            int mid = low + (high - low) / 2; // Corrected calculation of 'mid'
+            if (canEat(piles, mid, h)) {
+                high = mid; // jab mid no. of bananas kha sakta hai to right side me jana hi nahi hai
+                // piche ki taraf jayenge
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+    }
+}
