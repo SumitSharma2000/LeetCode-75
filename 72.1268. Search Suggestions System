@@ -1,0 +1,27 @@
+class Solution {
+    // prefix-based search implementation.
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+           Arrays.sort(products);  // This line sorts the array of products lexicographically.
+           // Sorting the products allows for efficient prefix-based searching later in the code.
+        List<List<String>> result = new ArrayList<>();
+        String prefix = ""; // gradually built as characters are processed from the search query.
+        
+        for (char c : searchWord.toCharArray()) {
+            prefix += c;
+            List<String> suggestedProducts = new ArrayList<>();
+            
+            for (String product : products) {
+                if (product.startsWith(prefix)) {
+                    suggestedProducts.add(product);
+                }
+                if (suggestedProducts.size() == 3) {
+                    break;
+                }
+            }
+            
+            result.add(suggestedProducts);
+        }
+        
+        return result;
+    }
+}
